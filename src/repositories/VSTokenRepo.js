@@ -1,7 +1,6 @@
 import Web3 from 'web3';
-import path from 'path';
-import cjson from 'cjson';
 import TX from 'ethereumjs-tx';
+import EtherScan from './etherScan';
 import ether_config from '../../configs/ether_config.json';
 
 // contract details
@@ -9,13 +8,13 @@ const provider = ether_config.provider;
 const contractAddress = ether_config.contractAddress;
 const privateKey = new Buffer(ether_config.privateKey, 'hex');
 const defaultAccount = ether_config.defaultAccount;
-const etherscanLink = ether_config.etherscanLink;
 
 // khoi tao web3
-const web3 = new Web3(provider)
+const web3 = new Web3(provider);
 var contract = null;
+let etherScan=new EtherScan();
 
-class VSCTokenRepo {
+class VSTokenRepo {
   constructor() { };
 
   // Chuyen doi tu Wei toi Eth
@@ -32,22 +31,23 @@ class VSCTokenRepo {
       var abi = ether_config.abi;
       var c = new web3.eth.Contract(abi, contractAddress);
       contract = c.clone();
+      console.log("init smartcontract success");
     }
     return contract;
   }
 
-  // Send Signed Transaction
+  // Dang ky Transaction
   async sendSignTransaction(rawTrans) {
     // Initiate values required by the dataTrans
     if (rawTrans) {
-      var txCount = await web3.eth.getTransactionCount(defaultAccount) // needed for nonce
-      var abiTrans = rawTrans.encodeABI() // encoded contract method 
+      var txCount = await web3.eth.getTransactionCount(defaultAccount);
+      var abiTrans = rawTrans.encodeABI();
 
-      var gas = await rawTrans.estimateGas()
-      var gasPrice = await web3.eth.getGasPrice()
-      gasPrice = Number(gasPrice)
-      gasPrice = gasPrice * 2
-      var gasLimit = gas * 4
+      var gas = await rawTrans.estimateGas();
+      var gasPrice = await web3.eth.getGasPrice();
+      gasPrice = Number(gasPrice);
+      gasPrice = gasPrice * 2;
+      var gasLimit = gas * 4;
 
       // Initiate the transaction data
       var dataTrans = {
@@ -59,37 +59,18 @@ class VSCTokenRepo {
       }
 
       // sign transaction
-      var tx = new TX(dataTrans)
-      tx.sign(privateKey)
+      var tx = new TX(dataTrans);
+      tx.sign(privateKey);
 
       // after signing send the transaction
-      return await sendSigned(tx)
+      return await etherScan.sendSigned(tx);
     } else {
       throw new console.error('Encoded raw transaction was not given.');
     }
 
   }
 
-  sendSigned(tx) {
-    return new Promise(function (resolve, reject) {
-      // send the signed transaction
-      web3.eth.sendSignedTransaction('0x' + tx.serialize().toString('hex'))
-        .once('transactionHash', function (hash) {
-          var result = {
-            'status': 'sent',
-            'url': etherscanLink + hash,
-            'message': 'click the given url to verify status of transaction'
-          }
-          resolve(result)
-        })
-        .then(out => { console.log(out) })
-        .catch(err => {
-          reject(err)
-        })
-    })
-  }
-
 }
 
 
-module.exports = VSCTokenRepo;
+module.exports = VSTokenRepo;

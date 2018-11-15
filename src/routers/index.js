@@ -1,15 +1,15 @@
 import express from 'express';
 import server_config from '../../configs/server_config';
-import VSCTokenService from '../services/vscTokenService';
+import VSTokenService from '../services/VSTokenService';
 
 /** */
 let router = express.Router();
-let vscTokenService=new VSCTokenService();
+let vsTokenService=new VSTokenService();
 
-/**public */
+/**get Balance */
 router.get(server_config.api_url+"getbalance/:address", async(req, res) => {
 	try {
-		let result=await vscTokenService.getBalance(req.params.address);
+		let result=await vsTokenService.getBalance(req.params.address);
 
 		res.json(result);
 	} catch (error) {
@@ -18,6 +18,33 @@ router.get(server_config.api_url+"getbalance/:address", async(req, res) => {
 	
 });
 
+/**
+ * @addressFrom=msg.sender
+ * @addressto
+ * @value
+*/
+router.post(server_config.api_url+"transferTo",async(req,res)=>{
+	try {
+		let result= await vsTokenService.transferTo(req.body.addressto,req.body.value);
+		res.json(result);
+	} catch (error) {
+		res.json({"Error :":error+""});
+	}
+});
+
+/**
+ * @addressFrom
+ * @addressto
+ * @value
+*/
+router.post(server_config.api_url+"transferFrom",async(req,res)=>{
+	try {
+		let result= await vsTokenService.transferFrom(req.body.addressfrom,req.body.addressto,req.body.value);
+		res.json(result);
+	} catch (error) {
+		res.json({"Error :":error+""});
+	}
+});
 
 /**export */
 module.exports = router;
