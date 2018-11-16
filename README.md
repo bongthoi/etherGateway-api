@@ -28,7 +28,7 @@
 
 ## How to access API with Postman
 1. get Balance.
-- [getBalance()-GET] http://localhost:3000/api/getBalance/[YOUR_ADDRESS]
+- [getBalance()-POST] http://localhost:3000/api/getBalance/[{"address":"YOUR_ADDRESS"}]
 
 2. Transfer Token
 - [transferTo()-POST] http://localhost:3000/api/transferTo/[{"addressto":"YOUR_ADDRESS_TO","value":YOUR_VALUE}]

@@ -7,9 +7,9 @@ let router = express.Router();
 let vsTokenService=new VSTokenService();
 
 /**get Balance */
-router.get(server_config.api_url+"getbalance/:address", async(req, res) => {
+router.post(server_config.api_url+"getbalance", async(req, res) => {
 	try {
-		let result=await vsTokenService.getBalance(req.params.address);
+		let result=await vsTokenService.getBalance(req.body.address);
 
 		res.json(result);
 	} catch (error) {
