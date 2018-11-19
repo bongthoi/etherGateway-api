@@ -6,6 +6,7 @@ contract address:0x6d31f806cf3e5d409128ed98c0c0717806750c22
 infura api:https://ropsten.infura.io/v3/4e43eb24affe4406ba5cb0f43aad7a2e
 
 account 2:0xeDcb82Fc306d4DF3Bafdc843b65DF265F458456C
+private key:b6e62bd628c29d5f8991f3b656bcd9c23615ac55751a9abe2a2d6a628e148525
 
 smartcontract
 pragma solidity ^0.4.21;

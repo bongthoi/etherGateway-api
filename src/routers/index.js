@@ -39,7 +39,7 @@ router.post(server_config.api_url+"transferTo",async(req,res)=>{
 */
 router.post(server_config.api_url+"transferFrom",async(req,res)=>{
 	try {
-		let result= await vsTokenService.transferFrom(req.body.addressfrom,req.body.addressto,req.body.value);
+		let result= await vsTokenService.transferFrom(req.body.addressfrom,req.body.privatekey,req.body.addressto,req.body.value);
 		res.json(result);
 	} catch (error) {
 		res.json({"Error :":error+""});

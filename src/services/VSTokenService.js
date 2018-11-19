@@ -3,6 +3,8 @@ import VSTokenRepo from '../repositories/VSTokenRepo';
 import ether_config from '../../configs/ether_config';
 
 const provider = ether_config.provider;
+const defaultAccount = ether_config.defaultAccount;
+const defaultPrivateKey = new Buffer(ether_config.defaultPrivateKey, 'hex');
 
 // khoi tao web3
 const web3 = new Web3(provider);
@@ -40,7 +42,7 @@ async transferTo(_addressTo,_value) {
 
     const rawTrans = await vsTokenRepo.getContract().methods.transferTo(_addressTo,Number(_value));
     console.log(method+ " -->success");
-    return await vsTokenRepo.sendSignTransaction(rawTrans);
+    return await vsTokenRepo.sendSignTransaction(rawTrans,defaultAccount,defaultPrivateKey);
   } else {
     console.log(method+ " -->failed");
     return {
@@ -54,14 +56,14 @@ async transferTo(_addressTo,_value) {
   // @addressFrom
   // @addressTo
   // @value
-  async transferFrom(_addressFrom,_addressTo,_value) {
+  async transferFrom(_addressFrom,_thePrivateKey,_addressTo,_value) {
     let method="vsTokenService/transferTo";
     console.log(method+ " -->start");
     if (_addressTo && _value) {
   
       const rawTrans = await vsTokenRepo.getContract().methods.transferFrom(_addressFrom,_addressTo,Number(_value));
       console.log(method+ " -->success");
-      return await vsTokenRepo.sendSignTransaction(rawTrans);
+      return await vsTokenRepo.sendSignTransaction(rawTrans,_addressFrom,_thePrivateKey);
     } else {
       console.log(method+ " -->failed");
       return {

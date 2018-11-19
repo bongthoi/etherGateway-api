@@ -6,8 +6,6 @@ import ether_config from '../../configs/ether_config.json';
 // contract details
 const provider = ether_config.provider;
 const contractAddress = ether_config.contractAddress;
-const privateKey = new Buffer(ether_config.privateKey, 'hex');
-const defaultAccount = ether_config.defaultAccount;
 
 // khoi tao web3
 const web3 = new Web3(provider);
@@ -37,10 +35,10 @@ class VSTokenRepo {
   }
 
   // Dang ky Transaction
-  async sendSignTransaction(rawTrans) {
+  async sendSignTransaction(rawTrans,theAccount,thePrivateKey) {
     // Initiate values required by the dataTrans
     if (rawTrans) {
-      var txCount = await web3.eth.getTransactionCount(defaultAccount);
+      var txCount = await web3.eth.getTransactionCount(theAccount);
       var abiTrans = rawTrans.encodeABI();
 
       var gas = await rawTrans.estimateGas();
@@ -60,7 +58,7 @@ class VSTokenRepo {
 
       // sign transaction
       var tx = new TX(dataTrans);
-      tx.sign(privateKey);
+      tx.sign(new Buffer(thePrivateKey,'hex'));
 
       // after signing send the transaction
       return await etherScan.sendSigned(tx);
