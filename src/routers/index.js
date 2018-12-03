@@ -46,5 +46,17 @@ router.post(server_config.api_url+"transferFrom",async(req,res)=>{
 	}
 });
 
+/**
+ * createAccount
+*/
+router.get(server_config.api_url+"createAccount",async(req,res)=>{
+	try {
+		let result= await vsTokenService.createAccount();
+		res.json(result);
+	} catch (error) {
+		res.json({"Error :":error+""});
+	}
+});
+
 /**export */
 module.exports = router;
