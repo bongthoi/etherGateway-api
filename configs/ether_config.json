@@ -3,7 +3,7 @@
     "defaultAccount":"0x5FEE6D6605Fee0f22F196d0507850c92EFD43F16",
     "contractAddress":"0x6d31f806cf3e5d409128ed98c0c0717806750c22",
     "provider":"https://ropsten.infura.io/v3/4e43eb24affe4406ba5cb0f43aad7a2e",
-    "etherscanLink":"https://rinkeby.etherscan.io/tx/",
+    "etherscanLink":"https://ropsten.etherscan.io/tx/",
     "abi":[
         {
             "constant": true,
