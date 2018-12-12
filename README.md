@@ -4,7 +4,7 @@
 - [x] Setup Enviroment.
 - [x] ES2015,ES2017.
 - [x] getBalance,transferTo,transferFrom/Tokens.
-- [x] getBalance,transferEther/Ether.
+
 
 
 ## Structure's Project:
