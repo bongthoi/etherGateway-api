@@ -1,11 +1,11 @@
-# etherGateway-api
+# ether-ropsten-api
 
 ## Features:
 - [x] Setup Enviroment.
 - [x] ES2015,ES2017.
-- [x] GET,POST,PUT,DELETE/CATEGORIES.
-- [x] GET,POST,PUT,DELETE/PRODUCTS.
-- [x] GET,POST,PUT,DELETE/USERS.
+- [x] getBalance,transferTo,transferFrom/Tokens.
+- [x] getBalance,transferEther/Ether.
+
 
 ## Structure's Project:
 ```bash
@@ -30,9 +30,10 @@
 1. get Balance.
 - [getBalance()-POST] http://localhost:3000/api/getBalance/[{"address":"YOUR_ADDRESS"}]
 
-2. Transfer Token
+2. create Account
+- [createAccount()-GET] http://localhost:3000/api/createAccount
+
+3. Transfer Token
 - [transferTo()-POST] http://localhost:3000/api/transferTo/[{"addressto":"YOUR_ADDRESS_TO","value":YOUR_VALUE}]
 - [transferFrom-POST] http://localhost:3000/api/transferFrom/[{"addressfrom":"YOUR_ADDRESS_FROM","privatekey":"PRIATE_KEY_OF_ACCOUNT_FROM","addressto":"YOUR_ADDRESS_TO","value":YOUR_VALUE}]
 
-3. createAccount.
-- [createAccount()-GET] http://localhost:3000/api/createAccount
